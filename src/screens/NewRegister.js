@@ -23,7 +23,7 @@ const NewRegister = () => {
         getCatalog,
         store } = useContext(NewRegisterContext);
     useEffect(() => {
-        clearState()
+         clearState()
         getCatalog()
     }, []);
     return (
@@ -60,7 +60,6 @@ const NewRegister = () => {
                             handleInputChange(value, 'email')
                     }}
                     onSubmit={(value) => {
-                        console.log(value);
                         selectStudenEmail(value)
                     }}
                     textInputProps={{
@@ -122,7 +121,14 @@ const NewRegister = () => {
                 titleDate="Fecha de nacimiento"
                 placeholder={'Fecha de nacimiento'}
                 onChangeDate={(date) => {
-                    handleInputChange(moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD'), 'birthdate')
+                    var dateObject = new Date(date);
+                    if (date != null) {
+                        var dateString = date;
+                        var dateParts = dateString.split("-");
+                        dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+                    }
+
+                    handleInputChange(moment(dateObject).format('YYYY-MM-DD'), 'birthdate')
                 }}
             />
             <Text style={[tw` text-base my-1 font-bold`, { color: '#133C60' }]}>Género<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>

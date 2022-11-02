@@ -21,7 +21,7 @@ const NewRegisterStep2 = ({ route }) => {
 
 
     useEffect(() => {
-        clearState()
+         clearState()
     }, []);
     useEffect(() => {
         getTotalCost(state.dataItems)
@@ -53,8 +53,8 @@ const NewRegisterStep2 = ({ route }) => {
                     {/* <ModalApostille /> */}
                 </View>
                 <View style={tw`flex-row items-start mt-8`}>
-                    <Text style={[tw` text-sm w-8/12 text-white pl-2`, styles.itemsT]}>Items:</Text>
-                    <Text style={[tw` text-sm w-60 pl-2`, styles.itemsT]}>Monto</Text>
+                    <Text style={[tw` text-sm text-white pl-2`, styles.itemsT, { width: '65%' }]}>Items:</Text>
+                    <Text style={[tw` text-sm pl-2`, styles.itemsT]}>Monto</Text>
                 </View>
                 <EntryList
                     data={state.dataItems}
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
 
     itemsT: {
         backgroundColor: '#2D5DA0',
-        color: 'white'
+        color: 'white',
+        width: '35%'
     },
 
 })

@@ -15,14 +15,12 @@ const DropdownSelect = ({ data, type, fun }) => {
 
         <SelectDropdown
             data={data}
-
-            defaultValueByIndex={2}
             onSelect={(selectedItem, index) => {
                 fun(selectedItem)
             }}
             defaultButtonText={type}
             renderCustomizedRowChild={(item, index) => {
-                return <Text numberOfLines={5} style={[{ marginTop: 1, marginLeft: 2, color: 'black' }]}>{item.title}</Text>
+                return <Text numberOfLines={5} style={[{ margin: 10 , color: 'black', fontSize: 12 }]}>{item.title}</Text>
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
                 return <Text style={{ color: 'black' }}>{selectedItem.title}</Text>

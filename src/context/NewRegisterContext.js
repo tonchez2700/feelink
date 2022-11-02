@@ -276,7 +276,6 @@ const handleInputChange = (dispatch) => {
 
 const selectStudenEmail = (dispatch) => {
     return async (value) => {
-        console.log(value);
         dispatch({
             type: 'SET_SELECT_STUDENT',
             payload: { value }

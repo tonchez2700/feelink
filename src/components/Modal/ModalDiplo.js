@@ -12,7 +12,9 @@ const { width } = Dimensions.get("window");
 const ModalDiplo = (data) => {
 
     const navigation = useNavigation();
-    const { state, clearState, handleInputChangeCamp, handleInputChangeProg, handleInputItems, getcampainsByStatus, getprogram } = useContext(NewRegisterStep2Context);
+    const { state, clearState, handleInputChangeCamp, 
+        handleInputChangeProg, handleInputItems,
+        getcampainsByStatus, getprogram } = useContext(NewRegisterStep2Context);
     const [modalVisible, setModalVisible] = useState(false);
     const toggleModalVisibility = () => {
         setModalVisible(!modalVisible);
@@ -21,7 +23,6 @@ const ModalDiplo = (data) => {
         getcampainsByStatus()
         getprogram(state.data?.campaignSelection?.id)
     }, [state.data]);
-
     return (
         <View>
             <Button
