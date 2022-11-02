@@ -17,7 +17,6 @@ export default function App() {
       <AuthProvider>
         <Stack.Navigator 
           initialRouteName="LoadingScreen" 
-          //dasdasdads
           screenOptions={{ headerShown: false }}>
             <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
             <Stack.Screen name="WrapperInnerScreens" component={WrapperInnerScreens} />
