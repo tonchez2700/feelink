@@ -15,7 +15,6 @@ const NavBar = () => {
             barStyle="default"
             leftContainerStyle={{ justifyContent: 'center' }}
             rightContainerStyle={{ justifyContent: 'center' }}
-            centerComponent={<Logo size='xs' />}
             rightComponent={
                 <TouchableOpacity
                     onPress={() => signout()}>

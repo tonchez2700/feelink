@@ -30,67 +30,61 @@ const AuthScreen = () => {
 
     return (
 
-        <ImageBackground source={Images.background} resizeMode="cover" style={[tw`flex-1 items-end flex-row`, {
-            backgroundColor: '#F5F5F5', position: 'absolute',
-            left: 0,
-            top: 0,
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-        }]}>
-            <View style={tw`h-full items-center`}>
-                <ScrollView contentContainerStyle={tw`items-center`}>
 
-                    <SimpleNavBar />
-                    <Text style={[tw`text-3xl mt-10 font-bold`, { color: '#292929' }]}>Bienvenido</Text>
-                    <View style={tw`w-4/5 mt-8`}>
-                        <InputForm
-                            placeholder={'Correo'}
-                            name='email'
-                            leftIcon={<Icon type='font-awesome' name='envelope' size={25} color='black' style={{ marginRight: 15 }} />}
-                            autoCapitalize='none'
-                            inputContainerStyle={styles.input}
-                            keyboardType='email-address'
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors}
-                            values={values}
-                            touched={touched} />
-                        <InputForm
-                            placeholder={'Contraseña'}
-                            name='password'
-                            leftIcon={<Icon type='font-awesome' name='lock' size={25} color='black' style={{ marginRight: 26 }} />}
-                            autoCapitalize='none'
-                            inputContainerStyle={styles.input}
-                            secureTextEntry={true}
-                            password={true}
-                            handleChange={handleChange}
-                            handleBlur={handleBlur}
-                            errors={errors}
-                            values={values}
-                            touched={touched} />
-                        <View style={tw`items-end`}>
-                            <Text style={[tw`text-xs mb-10 font-bold `, { color: '#707070' }]}>¿Olvidaste tu contraseña?</Text>
-                        </View>
-                        <ButtonFrom handleSubmit={handleSubmit} loading={state.fetchingData ? true : false} />
+        <View style={tw`h-full items-center`}>
+            <ScrollView contentContainerStyle={tw`items-center`}>
+
+                <SimpleNavBar />
+                <Text style={[tw`text-3xl mt-10 font-bold`, { color: '#292929' }]}>Bienvenido</Text>
+                <View style={tw`w-4/5 mt-8`}>
+                    <InputForm
+                        placeholder={'Correo'}
+                        name='email'
+                        leftIcon={<Icon type='font-awesome' name='envelope' size={25} color='black' style={{ marginRight: 15 }} />}
+                        autoCapitalize='none'
+                        inputContainerStyle={styles.input}
+                        keyboardType='email-address'
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        errors={errors}
+                        values={values}
+                        touched={touched} />
+                    <InputForm
+                        placeholder={'Contraseña'}
+                        name='password'
+                        leftIcon={<Icon type='font-awesome' name='lock' size={25} color='black' style={{ marginRight: 26 }} />}
+                        autoCapitalize='none'
+                        inputContainerStyle={styles.input}
+                        secureTextEntry={true}
+                        password={true}
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
+                        errors={errors}
+                        values={values}
+                        touched={touched} />
+                    
+                    <ButtonFrom handleSubmit={handleSubmit} loading={state.fetchingData ? true : false} />
+                    <View style={tw`items-center`}>
+                        <Text style={[tw`text-xs mb-10 font-bold `, { color: '#707070' }]}>Al crear tu cuenta estas aceptando nuestros Términos de uso y Política de privacidad.</Text>
                     </View>
-                    {
-                        state.error === true
-                            ?
-                            Alert.alert(
-                                "Error de Autentificacion",
-                                state.message,
-                                [{
-                                    text: "OK",
-                                    onPress: clearState
-                                }]
-                            )
-                            :
-                            null
-                    }
+                </View>
+                {
+                    state.error === true
+                        ?
+                        Alert.alert(
+                            "Error de Autentificacion",
+                            state.message,
+                            [{
+                                text: "OK",
+                                onPress: clearState
+                            }]
+                        )
+                        :
+                        null
+                }
 
-                </ScrollView>
-            </View>
-        </ImageBackground >
+            </ScrollView>
+        </View>
 
 
     )

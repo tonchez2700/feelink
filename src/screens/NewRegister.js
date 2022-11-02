@@ -3,19 +3,15 @@ import { ScrollView, StyleSheet, Alert, View, Text, TouchableOpacity, ActivityIn
 import { useNavigation, } from '@react-navigation/native';
 import { Input, Button, Icon } from 'react-native-elements'
 import { Context as NewRegisterContext } from '../context/NewRegisterContext';
-import DateRange from '../components/DateRange';
-import StepStatus from '../components/StepStatus';
-import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
-import HeadTitleScreen from '../components/Forms/HeadTitleScreen';
-import DropD from '../components/DropD';
-import DropdownSelect from '../components/DropdownSelect';
+import PhotoTools from '../components/Modal/PhotoTools'
 import tw from 'tailwind-react-native-classnames'
 import moment from 'moment'
 
 const NewRegister = () => {
-
+    const [flexWrapper, setFlexWrapper] = useState(true);
     const navigation = useNavigation();
     const { state,
+<<<<<<< HEAD
         clearState,
         selectStudenEmail,
         handleEmailChange,
@@ -26,39 +22,21 @@ const NewRegister = () => {
          clearState()
         getCatalog()
     }, []);
+=======
+        clearState } = useContext(NewRegisterContext);
+
+>>>>>>> 2ff8a71b08994167cf40fcd78173ed97f1911e12
     return (
 
         <ScrollView
-            nestedScrollEnabled
-            style={{ flex: 1, }}
-            keyboardDismissMode="on-drag"
-            keyboardShouldPersistTaps="handled"
-            contentInsetAdjustmentBehavior="automatic">
-            <HeadTitleScreen title='Visitante' />
-            <HeadTitleScreen title='Nuevo Registro' />
-            <View style={tw`mb-7`}>
-                <StepStatus
-                    number={0}
-                />
-            </View>
-            <Text style={tw`text-lg mb-5`}>Datos del Estudiante</Text>
-            <Text style={[tw` text-base mb-1 font-bold`, { color: '#133C60' }]}>Email<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>
-
-            <View style={{ marginBottom: 25, marginLeft: 10 }}>
-                <AutocompleteDropdown
-                    emptyResultText={"No se pudo encontrar el Nombre"}
-                    clearOnFocus={false}
-                    closeOnBlur={true}
-                    closeOnSubmit={false}
-                    onSelectItem={item => {
-                        item && selectStudenEmail(item)
-                        item && handleInputChange(item.title, 'email')
+            contentContainerStyle={{ flex: flexWrapper ? 1 : 0 }}
+            showsVerticalScrollIndicator={false}>
+            <View style={tw`mt-6 w-full`}>
+                <PhotoTools
+                    onCameraStart={(isVisible) => {
+                        setFlexWrapper(isVisible)
                     }}
-                    dataSet={state.listEmail}
-                    onChangeText={(value) => {
-                        handleEmailChange(value),
-                            handleInputChange(value, 'email')
-                    }}
+<<<<<<< HEAD
                     onSubmit={(value) => {
                         selectStudenEmail(value)
                     }}
@@ -169,6 +147,14 @@ const NewRegister = () => {
                     onPress={() => store(state.dataFrom)}
                 />
             </View>
+=======
+                    onTakePicture={(data) => {
+                        // handeOnChangeImagen(data)
+
+                    }}
+                />
+            </View>
+>>>>>>> 2ff8a71b08994167cf40fcd78173ed97f1911e12
         </ScrollView>
     )
 }
