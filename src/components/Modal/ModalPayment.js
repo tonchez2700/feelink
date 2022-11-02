@@ -64,7 +64,19 @@ const ModalPayment = ({ paymentPen }) => {
                                     titleDate="Fecha"
                                     placeholder='Fecha de pago'
                                     onChangeDate={(date) => {
-                                        handleInputChange(moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD'), 'promess_date')
+
+
+                                        var dateObject = new Date(date);
+                                        if (date != null) {
+                                            var dateString = date;
+
+                                            var dateParts = dateString.split("-");
+
+                                            // month is 0-based, that's why we need dataParts[1] - 1
+                                            dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+                                        }
+                                        handleInputChange(moment(dateObject).format('YYYY-MM-DD'), 'promess_date')
                                     }}
                                 />
                             </View>
@@ -91,7 +103,7 @@ const ModalPayment = ({ paymentPen }) => {
                                 titleStyle={tw`text-xs font-bold `}
                                 buttonStyle={[tw`mr-2 rounded-full  `, { backgroundColor: '#2D5DA0' }]}
                                 title="Siguiente"
-                                onPress={() => { handleInputChangePayment(state.data,paymentPen,state.count), toggleModalVisibility() }}
+                                onPress={() => { handleInputChangePayment(state.data, paymentPen, state.count), toggleModalVisibility() }}
                             />
 
                         </View>

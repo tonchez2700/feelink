@@ -106,7 +106,7 @@ const NewRegisterStep2Reducer = (state = initialState, action) => {
         case 'SET_DATA_CAMPAINS':
             return {
                 ...state,
-                campains: action.payload.listcampain
+                campains: action.payload.listcampain,
             }
         case 'SET_FINAL_COST':
             return {
@@ -192,11 +192,17 @@ const getprogram = (dispatch) => {
                 );
             if (response != '') {
                 const listProgram = response.map(item => ({
-                    group_id: item.diplomat.id,
+                    group_id: item.id,
                     reg_product_type_id: item.diplomat.diplomat_type_id,
                     title: item.diplomat.name,
                     cost: item.cost
                 }))
+                dispatch({
+                    type: 'SET_DATA_PROGRAM',
+                    payload: { listProgram }
+                });
+            } else {
+                const listProgram = [];
                 dispatch({
                     type: 'SET_DATA_PROGRAM',
                     payload: { listProgram }
@@ -227,11 +233,17 @@ const getBene = (dispatch) => {
                 );
             if (response != '') {
                 const listBene = response.map(item => ({
-                    group_id: item.diplomat.id,
+                    group_id: item.id,
                     reg_product_type_id: item.diplomat.diplomat_type_id,
                     title: item.diplomat.name,
                     cost: item.cost
                 }))
+                dispatch({
+                    type: 'SET_DATA_BENE',
+                    payload: { listBene }
+                });
+            } else {
+                const listBene = [];
                 dispatch({
                     type: 'SET_DATA_BENE',
                     payload: { listBene }

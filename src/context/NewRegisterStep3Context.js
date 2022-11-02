@@ -174,7 +174,7 @@ const getcampainsByStatus = (dispatch) => {
 
 const handleSwitchChange = (dispatch) => {
     return async (state, value) => {
-        console.log(value);
+      
         if (state) {
             const modo = 1
             dispatch({
@@ -282,14 +282,13 @@ const storeFinal = (dispatch) => {
             payments: dataTotal.payments
         }
         dispatch({ type: 'FETCHING_DATA', payload: { fetchingData: true } });
+        console.log(data);
         const user = JSON.parse(await AsyncStorage.getItem('user'));
         const token = user.token
-        console.log(data);
         const response = await httpClient.post(
             'sellings', data,
             { 'Authorization': `Bearer ${token}` }
         );
-        console.log(response);
         if (response.status) {
             dispatch({ type: 'FETCHING_DATA', payload: { fetchingData: false } });
             dispatch({ type: 'CLEAR_STATE_ALL', payload: { state: true } });

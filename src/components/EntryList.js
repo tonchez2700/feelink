@@ -10,7 +10,6 @@ const EntryList = ({ data, TotalCost, fun, listDiscount, discount, value, delete
 
     const { state, getCostFinal } = useContext(NewRegisterStep2Context);
     const navigation = useNavigation();
-
     return (
 
         <View>
@@ -19,36 +18,36 @@ const EntryList = ({ data, TotalCost, fun, listDiscount, discount, value, delete
                     <View key={item.count}>
                         {item.reg_product_type_id == 2
                             ?
-                            <View style={[tw`flex-col items-start pb-1`, { borderBottomWidth: .8 }]}>
-                                <Text style={tw`text-xs pl-2`}>BENEFICIO-{item.campaignSelection.title}</Text>
-                                <View style={tw`flex-row items-center`}>
-                                    <View style={tw`flex-row items-start`}>
-                                        <Text style={[tw` text-sm w-9/12 pl-2`]}>{item.benefit.title}:</Text>
-                                        <Text style={[tw` text-sm pl-6 `]}>${item.benefit.cost}</Text>
-                                    </View>
+                            <View style={[tw`flex-row items-start`, { borderBottomWidth: .8 }]}>
+                                <View style={[tw`flex-col`, { width: '65%' }]}>
+                                    <Text style={tw`text-xs`}>BENEFICIO-{item.campaignSelection.title}</Text>
+                                    <Text style={[tw` text-sm`]}>{item.benefit.title}:</Text>
+                                </View>
+                                <View style={[tw`flex-row`, { width: '35%', justifyContent: 'center' }]}>
+                                    <Text style={[tw`text-sm m-2`]}>${item.benefit.cost}</Text>
                                     <TouchableOpacity
                                         key={item.count}
                                         onPress={() => deleteItem(item.count)}>
-                                        <Icon type='font-awesome-5' name='trash' size={18} color='red' style={tw`mr-2 mb-2`} />
+                                        <Icon type='font-awesome-5' name='trash' size={18} color='red' style={tw`m-2`} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
                             :
-                            <View style={[tw`flex-col items-start pb-1`, { borderBottomWidth: .8 }]}>
-                                <Text style={tw`text-xs pl-2`}>DIPLOMADO-{item.campaignSelection.title}</Text>
-                                <View style={tw`flex-row`}>
-                                    <View style={tw`flex-row `}>
-                                        <Text style={[tw` text-sm w-9/12 pl-2`]}>{item.educationalProgram.title}:</Text>
-                                        <Text style={[tw` text-sm pl-6 `]}>${item.educationalProgram.cost}</Text>
-
-                                    </View>
+                            <View style={[tw`flex-row items-start`, { borderBottomWidth: .8 }]}>
+                                <View style={[tw`flex-col`, { width: '65%' }]}>
+                                    <Text style={tw`text-xs`}>DIPLOMADO-{item.campaignSelection.title}</Text>
+                                    <Text style={[tw` text-sm `]}>{item.educationalProgram.title}:</Text>
+                                </View>
+                                <View style={[tw`flex-row`, { width: '35%', justifyContent: 'center' }]}>
+                                    <Text style={[tw`text-sm m-2 `]}>${item.educationalProgram.cost}</Text>
                                     <TouchableOpacity
                                         key={item.count}
                                         onPress={() => deleteItem(item.count)}>
-                                        <Icon type='font-awesome-5' name='trash' size={18} color='red' style={tw`mr-2 mb-2`} />
+                                        <Icon type='font-awesome-5' name='trash' size={18} color='red' style={tw`m-2`} />
                                     </TouchableOpacity>
                                 </View>
-                            </View>}
+                            </View>
+                        }
                     </View>
                 )}
             {

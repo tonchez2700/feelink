@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 const EntryPaymentFinal = ({ data, TotalCost }) => {
     const navigation = useNavigation();
     const [isEnabled, setIsEnabled] = useState(false);
-    console.log(data);
 
     return (
 
@@ -17,7 +16,7 @@ const EntryPaymentFinal = ({ data, TotalCost }) => {
                     <View key={item.count}>
                         <View style={[tw`flex-row items-start py-2`, { borderBottomWidth: 1 }]}>
                             <Text style={[tw` text-sm w-5/12 pl-2`]}>{item.promess_date}</Text>
-                            <Text style={[tw` text-sm  w-5/12 mr-2 mb-1`]}>Pago Inicial</Text>
+                            <Text style={[tw` text-sm  w-5/12 mr-2 mb-1`]}>{item.reg_payment_type_id != 1 ? 'Parcialidad' : 'Pago Incial'}</Text>
                             <Text style={[tw` text-sm  w-1/3 mr-2 mb-1`]}>${item.amount}</Text>
                         </View>
                     </View>

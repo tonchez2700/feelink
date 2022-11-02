@@ -12,7 +12,6 @@ const EntryPayment = ({ data, TotalCost, taxable, fun }) => {
         setIsEnabled(previousState => !previousState)
         fun(isEnabled)
     }
-
     return (
 
         <View>
@@ -20,12 +19,13 @@ const EntryPayment = ({ data, TotalCost, taxable, fun }) => {
                 data.map((item) =>
                     <View key={item.count}>
                         <View style={[tw`flex-row items-start py-2`, { borderBottomWidth: 1 }]}>
-                            <Text style={[tw` text-sm w-5/12 pl-2`]}>{item.promess_date}</Text>
-                            <Text style={[tw` text-sm  w-5/12 mr-2 mb-1`]}>Pago Inicial</Text>
-                            <Text style={[tw` text-sm  w-1/3 mr-2 mb-1`]}>${item.amount}</Text>
+                            <Text style={[tw` text-sm`, { width: '33.33%', textAlign: 'center' }]}>{item.promess_date}</Text>
+                            <Text style={[tw` text-sm`, { width: '33.33%', textAlign: 'center' }]}>{item.reg_payment_type_id != 1 ? 'Parcialidad' : 'Pago Incial'}</Text>
+                            <Text style={[tw` text-sm`, { width: '33.33%', textAlign: 'center' }]}>${item.amount}</Text>
                         </View>
                     </View>
-                )}
+                )
+            }
             {
                 TotalCost != 0
                     ?
@@ -48,7 +48,7 @@ const EntryPayment = ({ data, TotalCost, taxable, fun }) => {
                     :
                     null
             }
-        </View>
+        </View >
     )
 }
 

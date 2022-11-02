@@ -105,9 +105,7 @@ const tryAuth = async (email, password, dispatch) => {
     const response = await httpClient.post(`auth/login?email=${email}&password=${password}`)
     const today = moment(new Date(), 'YYYY-MM-DD ').format('YYYY-MM-DD , h:mm:ss');
     const expirationTime = moment(response.token_expiration, 'YYYY-MM-DD ').format('YYYY-MM-DD , h:mm:ss')
-    console.log(response.token_expiration);
-    console.log(today);
-    console.log(expirationTime);
+
     if (expirationTime > today) {
         const user = {
             token: response.token,

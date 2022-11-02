@@ -15,9 +15,9 @@ const NewRegisterStep3 = ({ route }) => {
     const navigation = useNavigation();
     const { state, clearState, handleSwitchChange, store } = useContext(NewRegisterStep3Context);
     const { params } = route
-     useEffect(() => {
+    useEffect(() => {
          clearState()
-     }, []);
+    }, []);
     const getContent = () => {
         return (
             <ScrollView
@@ -42,10 +42,10 @@ const NewRegisterStep3 = ({ route }) => {
                     />
                 </View>
                 <Text style={[tw` text-sm font-medium text-right`, { color: 'black' }]}>Saldo Pendiente: <Text style={[tw` text-base font-bold`, { color: '#FF7A00' }]}>${(params?.cost - state.TotalCost)}</Text></Text>
-                <View style={tw`flex-row items-start my-2`}>
-                    <Text style={[tw`  text-sm  w-5/12 text-white pl-2`, styles.itemsT]}>Fecha</Text>
-                    <Text style={[tw`  text-sm  w-5/12 text-white pl-2`, styles.itemsT]}>Tipo</Text>
-                    <Text style={[tw`  text-sm  w-1/3  text-white pl-2`, styles.itemsT]}>Monto</Text>
+                <View style={tw`flex-row my-2`}>
+                    <Text style={[tw`  text-sm text-white`, styles.itemsT]}>Fecha</Text>
+                    <Text style={[tw`  text-sm text-white`, styles.itemsT]}>Tipo</Text>
+                    <Text style={[tw`  text-sm text-white`, styles.itemsT]}>Monto</Text>
                 </View>
                 <EntryPayment
                     data={state.dataPayment}
@@ -88,8 +88,10 @@ export default NewRegisterStep3
 const styles = StyleSheet.create({
 
     itemsT: {
+        textAlign: 'center',
         backgroundColor: '#2D5DA0',
-        color: 'white'
+        color: 'white',
+        width: '33.33%'
     },
 
 })
