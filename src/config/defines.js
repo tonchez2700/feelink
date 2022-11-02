@@ -1,4 +1,4 @@
-export const apiUrlBase = 'https://portal.feelink.zunit.mx/api'
+export const apiUrlBase = 'https://development.portal.feelink.zunit.mx/api'
 
 /**
  * Allowed agendas
