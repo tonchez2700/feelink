@@ -43,7 +43,7 @@ const DateRange = ({ onChangeDate, onChangeTime, placeholder }) => {
                     value={state.tmpDate}
                     mode={state.mode}
                     is24Hour={true}
-                    display="spinner"
+                    display="default"
                     onChange={onChangePicker}
                 />
             )}
