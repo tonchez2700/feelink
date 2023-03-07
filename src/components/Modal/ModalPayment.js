@@ -14,17 +14,16 @@ const { width } = Dimensions.get("window");
 
 const ModalPayment = ({ paymentPen }) => {
 
-
+    const [date, setDate] = useState(new Date());
     const navigation = useNavigation();
-    const { state, getPaymentsType, handleInputChange, handleInputChangePayment } = useContext(NewRegisterStep3Context);
-    const [modalVisible, setModalVisible] = useState(false);
+    const { state, getPaymentsType, handleInputChange, handleInputChangePayment, isVisibleModal } = useContext(NewRegisterStep3Context);
+
 
     useEffect(() => {
         getPaymentsType()
     }, []);
-    const toggleModalVisibility = () => {
-        setModalVisible(!modalVisible);
-    };
+
+
     return (
         <View>
             <Button
@@ -38,15 +37,18 @@ const ModalPayment = ({ paymentPen }) => {
                     color: '#133C60',
                 }}
                 title="Agregar Pago"
-                onPress={() => toggleModalVisibility()}
+                onPress={() => isVisibleModal()}
             />
 
             <Modal
+                visible={state.isVisible}
+                hardwareAccelerated
                 animationType="slide"
                 transparent
-                visible={modalVisible}
                 presentationStyle="overFullScreen"
-                onDismiss={() => toggleModalVisibility()}>
+                onRequestClose={() =>
+                    isVisibleModal()
+                }>
                 <View style={styles.viewWrapper}>
                     <View style={styles.modalView}>
                         <View style={tw`flex-col items-start p-3 w-full`}>
@@ -59,38 +61,57 @@ const ModalPayment = ({ paymentPen }) => {
                                 />
                             </View>
                             <View style={tw`flex-col items-start w-full`}>
-                                <Text style={[tw` text-sm mb-1 font-bold `, { color: '#133C60' }]}>Selecciona la Campaña</Text>
+                                <Text style={[tw` text-sm mb-1 font-bold `, { color: '#133C60' }]}>Selecciona la Fecha</Text>
                                 <DateRange
+                                    value={state.data?.promess_date}
                                     titleDate="Fecha"
                                     placeholder='Fecha de pago'
-                                    onChangeDate={(date) => {
-
-
-                                        var dateObject = new Date(date);
-                                        if (date != null) {
-                                            var dateString = date;
-
-                                            var dateParts = dateString.split("-");
-
-                                            // month is 0-based, that's why we need dataParts[1] - 1
-                                            dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
-                                        }
-                                        handleInputChange(moment(dateObject).format('YYYY-MM-DD'), 'promess_date')
+                                    tmp={date}
+                                    tmpfun={(item) => setDate(item)}
+                                    fun={(item) => {
+                                        let dateFormat = new Date(item)
+                                        handleInputChange(moment(dateFormat).format('YYYY-MM-DD'), 'promess_date')
                                     }}
                                 />
+
                             </View>
                             <View style={tw`flex-col items-start w-full`}>
-                                <Text style={[tw` text-sm font-bold `, { color: '#133C60' }]}>Monto</Text>
-                                <Input
-                                    keyboardType={'number-pad'}
-                                    placeholder={'$8,000'}
-                                    inputContainerStyle={tw` pl-1 `}
-                                    onChangeText={(value) => handleInputChange(value, 'amount')}
-                                    value={state.data?.payment}
-                                    labelStyle={{ color: '#133C60' }}
-                                    multiline={false}
-                                />
+                                <View style={tw`flex-col items-start w-full`}>
+                                    <Text style={[tw` text-sm font-bold `, { color: '#133C60' }]}>Monto</Text>
+                                    <Input
+                                        keyboardType={'number-pad'}
+                                        placeholder={'$8,000'}
+                                        inputContainerStyle={tw` pl-1 `}
+                                        onChangeText={(value) => { handleInputChange(value, 'amount'), handleInputChange(null, 'image') }}
+                                        value={state.data?.amount}
+                                        labelStyle={{ color: '#133C60' }}
+                                        multiline={false}
+                                    />
+                                </View>
+                                {state.data?.reg_payment_type_id != 2 ?
+                                    <View style={{ width: '100%' }}>
+                                        <Text style={[tw` text-sm font-bold `, { color: '#133C60' }]}>Evidencia</Text>
+                                        <TouchableOpacity style={{ width: '100%' }} onPress={() => {
+                                            isVisibleModal(),
+                                                setTimeout(() => {
+                                                    navigation.navigate('PhotoPaymentScreen')
+                                                }, 1000);
+                                        }}>
+                                            <Input
+                                                keyboardType={'number-pad'}
+                                                placeholder={'Evidencia'}
+                                                editable={false}
+                                                inputContainerStyle={tw` pl-1 `}
+                                                value={state.data?.image}
+                                                labelStyle={{ color: '#133C60' }}
+                                                multiline={false}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                    : null
+                                }
+
+
                             </View>
                         </View>
                         <View style={tw`flex-row  justify-between `}>
@@ -98,12 +119,12 @@ const ModalPayment = ({ paymentPen }) => {
                                 titleStyle={tw`text-xs font-bold`}
                                 buttonStyle={[tw` mr-2  rounded-full `, { backgroundColor: '#868686' }]}
                                 title="Cancelar"
-                                onPress={() => toggleModalVisibility()}
+                                onPress={() => isVisibleModal()}
                             /><Button
                                 titleStyle={tw`text-xs font-bold `}
                                 buttonStyle={[tw`mr-2 rounded-full  `, { backgroundColor: '#2D5DA0' }]}
                                 title="Siguiente"
-                                onPress={() => { handleInputChangePayment(state.data, paymentPen, state.count), toggleModalVisibility() }}
+                                onPress={() => { handleInputChangePayment(state.data, paymentPen, state.count) }}
                             />
 
                         </View>
@@ -145,7 +166,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         transform: [{ translateX: -(width * 0.4) },
         { translateY: -90 }],
-        height: 400,
+        height: 500,
         width: width * 0.8,
         backgroundColor: "#fff",
         borderRadius: 5,

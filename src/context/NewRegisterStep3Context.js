@@ -11,6 +11,7 @@ const initialState = {
     message: "",
     finalState: false,
     fetchingData: false,
+    isVisible: false,
     campains: [],
     notes: '',
     count: 1,
@@ -38,6 +39,16 @@ const NewRegisterStep3Reducer = (state = initialState, action) => {
             }
         case 'FETCHING_DATA':
             return { ...state, fetchingData: action.payload.fetchingData }
+        case 'CHANGE_VISIBLE_MODAL':
+            let visibleCheck = !state.isVisible
+            return {
+                ...state,
+                error: false,
+                message: '',
+                fetchingData: false,
+                isVisible: visibleCheck
+            }
+
         case 'SET_REQUEST_ERROR':
             return {
                 ...state,
@@ -71,6 +82,7 @@ const NewRegisterStep3Reducer = (state = initialState, action) => {
                 paymentTypes: action.payload.listPayments
             }
         case 'ADD_PAYMENT':
+            let visibleCheckl = !state.isVisible
             let amount = 0;
             let newData = [action.payload.data];
             const aux = parseInt(state.count + 1)
@@ -82,7 +94,12 @@ const NewRegisterStep3Reducer = (state = initialState, action) => {
                 ...state,
                 count: aux,
                 dataPayment: newData,
-                TotalCost: amount
+                TotalCost: amount,
+                error: false,
+                message: '',
+                fetchingData: false,
+                isVisible: visibleCheckl,
+                data: ''
             }
         default:
             return state
@@ -174,7 +191,6 @@ const getcampainsByStatus = (dispatch) => {
 
 const handleSwitchChange = (dispatch) => {
     return async (state, value) => {
-      
         if (state) {
             const modo = 1
             dispatch({
@@ -188,7 +204,6 @@ const handleSwitchChange = (dispatch) => {
                 payload: { modo, state }
             })
         }
-
     }
 }
 
@@ -282,7 +297,6 @@ const storeFinal = (dispatch) => {
             payments: dataTotal.payments
         }
         dispatch({ type: 'FETCHING_DATA', payload: { fetchingData: true } });
-        console.log(data);
         const user = JSON.parse(await AsyncStorage.getItem('user'));
         const token = user.token
         const response = await httpClient.post(
@@ -347,6 +361,10 @@ const handleInputChangePayment = (dispatch) => {
                     text: "Aceptar",
                 }]
             )
+            dispatch({
+                type: 'CHANGE_VISIBLE_MODAL',
+                payload: { message }
+            })
         }
 
     }
@@ -359,6 +377,14 @@ const validateData = (data) => {
         return { ...result, error: true, message: 'Falta seleccionar Cantidad a pagar' }
     return result
 }
+const isVisibleModal = (dispatch) => {
+    return async (message) => {
+        dispatch({
+            type: 'CHANGE_VISIBLE_MODAL',
+            payload: { message }
+        })
+    }
+}
 
 export const { Context, Provider } = createDataContext(
     NewRegisterStep3Reducer,
@@ -368,6 +394,7 @@ export const { Context, Provider } = createDataContext(
         getPaymentsType,
         handleInputChange,
         handleNotesChange,
+        isVisibleModal,
         handleInputChangePayment,
         handleSwitchChange,
         store,

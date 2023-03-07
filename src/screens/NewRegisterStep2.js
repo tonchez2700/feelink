@@ -21,7 +21,7 @@ const NewRegisterStep2 = ({ route }) => {
 
 
     useEffect(() => {
-         clearState()
+        clearState()
     }, []);
     useEffect(() => {
         getTotalCost(state.dataItems)

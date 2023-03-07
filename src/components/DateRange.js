@@ -1,22 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Context as NewRegisterContext } from '../context/NewRegisterContext';
 import useDatePicker from './../hooks/useDatePicker'
 import tw from 'tailwind-react-native-classnames';
-
-const DateRange = ({ onChangeDate, onChangeTime, placeholder }) => {
-    const { state, handleVisibility, handleOnChangePicker } = useDatePicker()
-
-    const onChangePicker = (event, selectedDate) => {
-        handleOnChangePicker(selectedDate, state.mode)
-    }
-
-    useEffect(() => {
-        onChangeDate(state.date)
-    }, [state.date]);
-
-
+import moment from 'moment';
+const DateRange = ({ placeholder, fun, value, tmp, tmpfun }) => {
+    const { state, handleVisibility, handleInputChange } = useContext(NewRegisterContext);
 
     return (
         <View>
@@ -33,18 +24,21 @@ const DateRange = ({ onChangeDate, onChangeTime, placeholder }) => {
                     }}
                     placeholder={placeholder}
                     labelStyle={{ color: '#133C60' }}
-                    value={state.date ? state.date.toString() : null}
+                    value={value}
                 />
             </View>
             {state.isVisible && (
                 <DateTimePicker
                     testID="tmpDate"
-                    dateFormat="year month day"
-                    value={state.tmpDate}
-                    mode={state.mode}
+                    dateFormat="day month month"
+                    value={tmp}
+                    mode={'date'}
                     is24Hour={true}
                     display="default"
-                    onChange={onChangePicker}
+                    onChange={(event, date) => {
+                        fun(date)
+                        tmpfun(date)
+                    }}
                 />
             )}
         </View>

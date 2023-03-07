@@ -17,6 +17,7 @@ const initialState = {
     jobs: [],
     genders: [],
     media_origins: [],
+    isVisible: false
 }
 
 const NewRegisterReducer = (state = initialState, action) => {
@@ -48,6 +49,7 @@ const NewRegisterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetchingData: false,
+                isVisible: false,
                 dataFrom: {
                     ...state.dataFrom,
                     [typedata]: action.payload.value
@@ -66,6 +68,17 @@ const NewRegisterReducer = (state = initialState, action) => {
                 dataFrom: {
                     ...action.payload.value
                 }
+            }
+        case 'SET_VISIBILITY_STATE':
+            return {
+                ...state,
+                isVisible: action.payload.isVisible,
+            }
+        case 'SET_DATE_VALUE':
+            return {
+                ...state,
+                date: action.payload.date,
+                isVisible: false
             }
         default:
             return state
@@ -215,7 +228,7 @@ const store = (dispatch) => {
                 dispatch({ type: 'FETCHING_DATA', payload: { fetchingData: false } });
                 Alert.alert(
                     "Error",
-                    response.message,
+                    response.errors.email[0],
                     [{
                         text: "Aceptar"
 
@@ -283,6 +296,20 @@ const selectStudenEmail = (dispatch) => {
     }
 }
 
+//Metodos de DatePicker
+
+
+const handleVisibility = (dispatch) => {
+    return async () => {
+        dispatch({
+            type: 'SET_VISIBILITY_STATE',
+            payload: {
+                isVisible: true,
+            }
+        })
+    }
+
+}
 export const { Context, Provider } = createDataContext(
     NewRegisterReducer,
     {
@@ -291,6 +318,7 @@ export const { Context, Provider } = createDataContext(
         selectStudenEmail,
         handleInputChange,
         getCatalog,
+        handleVisibility,
         store
 
     },

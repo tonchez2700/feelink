@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider as NewRegisterProvider } from '../context/NewRegisterContext';
 import { Provider as NewRegisterStep2Provider } from '../context/NewRegisterStep2Context';
 import { Provider as NewRegisterStep3Provider } from '../context/NewRegisterStep3Context';
+import PhotoPaymentScreen from './PhotoPaymentScreen';
 import NewRegisterStep4 from './NewRegisterStep4';
 import NewRegisterStep3 from './NewRegisterStep3';
 import NewRegisterStep2 from './NewRegisterStep2';
@@ -30,6 +31,7 @@ const WrapperInnerScreens = () => {
                                 <AppStack.Screen name="NewRegisterStep2" component={NewRegisterStep2} />
                                 <AppStack.Screen name="NewRegisterStep3" component={NewRegisterStep3} />
                                 <AppStack.Screen name="NewRegisterStep4" component={NewRegisterStep4} />
+                                <AppStack.Screen name="PhotoPaymentScreen" component={PhotoPaymentScreen} />
                             </AppStack.Navigator>
                         </NewRegisterStep3Provider>
                     </NewRegisterStep2Provider>

@@ -1,8 +1,8 @@
 import { useReducer } from 'react'
 import moment from 'moment';
 
-const initialState = { 
-    date: null,
+const initialState = {
+    date: '',
     time: null,
     tmpDate: null,
     mode: 'date',
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const datePickerReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case 'CLEAR_STATE':
             return initialState
         case 'HIDE_PICKER':
@@ -18,70 +18,81 @@ const datePickerReducer = (state = initialState, action) => {
         case 'SET_INITIAL_DATA':
             return { ...state, date: action.payload.date }
         case 'SET_VISIBILITY_STATE':
-            return { 
-                ...state, 
+            return {
+                ...state,
                 tmpDate: state.tmpDate ? state.tmpDate : new Date(),
-                isVisible: action.payload.isVisible,  
-                mode: action.payload.mode 
+                isVisible: action.payload.isVisible,
+                mode: action.payload.mode
             }
         case 'SET_DATE_VALUE':
-            return { 
-                ...state, 
+            return {
+                ...state,
                 date: action.payload.date,
                 tmpDate: action.payload.tmpDate,
-                isVisible: false 
+                isVisible: false
             }
         case 'SET_TIME_VALUE':
-            return { 
-                ...state, 
+            return {
+                ...state,
                 time: action.payload.time,
                 tmpDate: action.payload.tmpDate,
-                isVisible: false 
+                isVisible: false
+            }
+        case 'SET_DATE':
+            return {
+                ...state,
+                date: action.payload.date,
+                isVisible: false
             }
         default:
             return state
     }
 }
 
-const getFormatedDate = (date, format) => {
-    return moment(date).format(format)   
-}
 
 const useDatePicker = (initialDate) => {
-        
+
     const [state, dispatch] = useReducer(datePickerReducer, initialState);
 
-    const handleVisibility = (mode) => {
-        dispatch({ 
-            type: 'SET_VISIBILITY_STATE', 
-            payload: { 
-                isVisible: true,
-                mode 
-            } 
+    const handleVisibility = () => {
+        dispatch({
+            type: 'SET_VISIBILITY_STATE',
+            payload: {
+                isVisible: true
+            }
+        })
+    }
+
+    const changeDate = (value) => {
+        dispatch({
+            type: 'SET_DATE',
+            payload: {
+                date: value
+            }
         })
     }
 
     const handleOnChangePicker = (selectedDate, mode) => {
-        const currentDate = selectedDate || state.date;
-        if(selectedDate){
-            if(mode === 'date'){
-                dispatch({ 
-                    type: 'SET_DATE_VALUE', 
+        const currentDate = selectedDate
+        if (selectedDate) {
+            if (mode === 'date') {
+                dispatch({
+                    type: 'SET_DATE_VALUE',
                     payload: {
-                        date: getFormatedDate(currentDate, 'DD-MM-YYYY'),
+                        date: currentDate,
                         tmpDate: new Date(selectedDate)
-                    } 
+                    }
                 })
-            }else{
-                dispatch({ 
-                    type: 'SET_TIME_VALUE', 
+            } else {
+                dispatch({
+                    type: 'SET_TIME_VALUE',
                     payload: {
-                        time: getFormatedDate(currentDate, 'HH:mm'),
+                        time: currentDate,
                         tmpDate: new Date(selectedDate)
-                    } 
+                    }
                 })
             }
-        }else{
+        } else {
             dispatch({ type: 'HIDE_PICKER' })
         }
     }
@@ -89,7 +100,8 @@ const useDatePicker = (initialDate) => {
     return {
         state,
         handleVisibility,
-        handleOnChangePicker
+        handleOnChangePicker,
+        changeDate
     };
 }
 

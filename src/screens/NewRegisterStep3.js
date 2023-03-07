@@ -15,9 +15,9 @@ const NewRegisterStep3 = ({ route }) => {
     const navigation = useNavigation();
     const { state, clearState, handleSwitchChange, store } = useContext(NewRegisterStep3Context);
     const { params } = route
-    useEffect(() => {
-         clearState()
-    }, []);
+
+    
+
     const getContent = () => {
         return (
             <ScrollView
@@ -65,6 +65,7 @@ const NewRegisterStep3 = ({ route }) => {
                         title="Siguiente"
                         onPress={() => {
                             store(params, state.dataPayment, params?.cost, state.TotalCost, state.is_taxable)
+                            clearState()
                         }}
                     />
 
@@ -75,9 +76,7 @@ const NewRegisterStep3 = ({ route }) => {
     return (
         <View>
             {
-
                 getContent()
-
             }
         </View>
     )
