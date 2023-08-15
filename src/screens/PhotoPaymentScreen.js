@@ -67,7 +67,6 @@ const PhotoPaymentScreen = () => {
     if (photo) {
 
         let savePhoto = () => {
-            console.log(state.isVisible);
             handleInputChange(`data:image/jpg;base64${photo.base64}`, 'image')
             isVisibleModal();
             MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {

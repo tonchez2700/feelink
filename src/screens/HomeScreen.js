@@ -18,6 +18,12 @@ const HomeScreen = () => {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ alignItems: 'center' }}>
                 <HeadTitleScreen title='Registro de Estudiantes' />
+                <Button
+                    titleStyle={tw`text-xs font-bold `}
+                    buttonStyle={[{ backgroundColor: '#2D5DA0', height: 55 }]}
+                    title="Siguiente"
+                    onPress={() => { navigation.navigate('NewRegisterStep3') }}
+                />
                 <MenuItem
                     title='Registrar Estudiante'
                     icon='user-plus'

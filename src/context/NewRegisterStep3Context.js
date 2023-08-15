@@ -58,12 +58,16 @@ const NewRegisterStep3Reducer = (state = initialState, action) => {
             }
         case 'SET_INPUT':
             let typeData = action.payload.typeData
+            let index = action.payload.index
+            let Aux
+            Aux[index] = {
+                ...state.data,
+                [typeData]: action.payload.value
+            }
+            console.log('pato', JSON.stringify(Aux, null, 2));
             return {
                 ...state,
-                data: {
-                    ...state.data,
-                    [typeData]: action.payload.value
-                }
+                data: Aux
             }
         case 'SET_NOTES':
             return {
@@ -208,10 +212,10 @@ const handleSwitchChange = (dispatch) => {
 }
 
 const handleInputChange = (dispatch) => {
-    return async (value, typeData) => {
+    return async (value, typeData, index) => {
         dispatch({
             type: 'SET_INPUT',
-            payload: { value, typeData }
+            payload: { value, typeData, index }
         })
     }
 }

@@ -30,7 +30,7 @@ const DateRange = ({ placeholder, fun, value, tmp, tmpfun }) => {
             {state.isVisible && (
                 <DateTimePicker
                     testID="tmpDate"
-                    dateFormat="day month month"
+                    dateFormat="day month year"
                     value={tmp}
                     mode={'date'}
                     is24Hour={true}

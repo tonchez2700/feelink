@@ -17,20 +17,17 @@ const NewRegister = () => {
 
     const navigation = useNavigation();
     const { state,
-        clearState,
-        selectStudenEmail,
-        handleEmailChange,
-        handleInputChange,
-        getCatalog,
+        clearState, selectStudenEmail,
+        handleEmailChange, handleInputChange,
+        getCatalog, getCities, getStates,
         store } = useContext(NewRegisterContext);
 
     const [date, setDate] = useState(new Date());
 
     useEffect(() => {
-        clearState()
+
         getCatalog()
     }, []);
-
 
     return (
 
@@ -132,17 +129,29 @@ const NewRegister = () => {
                 }
                 }
             />
-            <Text style={[tw` text-base mb-1 font-bold`, { color: '#133C60' }]}>Cuidad<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>
+            <Text style={[tw` text-base my-2 font-bold`, { color: '#133C60' }]}>País<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>
+            <DropD
+                data={state.countries}
+                type={'Cuidad'}
+                value={state.dataFrom?.country_id}
+                fun={(item) => { handleInputChange(item, 'country_id'), getStates(item) }}
+            />
+            <Text style={[tw` text-base my-2 font-bold`, { color: '#133C60' }]}>Estado<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>
+            <DropD
+                data={state.states}
+                type={'Cuidad'}
+                value={state.dataFrom?.state_id}
+                fun={(item) => { handleInputChange(item, 'state_id'), getCities(item) }}
+            />
+            <Text style={[tw` text-base my-2 font-bold`, { color: '#133C60' }]}>Cuidad<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>
             <DropD
                 data={state.cities}
                 type={'Cuidad'}
                 value={state.dataFrom?.city_id}
-                fun={(item) =>
-
-                    handleInputChange(item, 'city_id')}
+                fun={(item) => handleInputChange(item, 'city_id')}
             />
 
-            <Text style={[tw` text-base my-1 font-bold`, { color: '#133C60' }]}>Género<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>
+            <Text style={[tw` text-base my-2 font-bold`, { color: '#133C60' }]}>Género<Text style={[tw` text-sm`, { color: 'red' }]}>*</Text></Text>
             <DropD
                 data={state.genders}
                 type={'Género'}

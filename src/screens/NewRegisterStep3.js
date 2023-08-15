@@ -16,8 +16,9 @@ const NewRegisterStep3 = ({ route }) => {
     const { state, clearState, handleSwitchChange, store } = useContext(NewRegisterStep3Context);
     const { params } = route
 
-    
 
+
+    // console.log('pato', JSON.stringify(state.dataPayment, null, 2));
     const getContent = () => {
         return (
             <ScrollView
@@ -65,7 +66,7 @@ const NewRegisterStep3 = ({ route }) => {
                         title="Siguiente"
                         onPress={() => {
                             store(params, state.dataPayment, params?.cost, state.TotalCost, state.is_taxable)
-                            clearState()
+                            // clearState()
                         }}
                     />
 

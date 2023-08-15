@@ -13,6 +13,8 @@ const initialState = {
     dataFrom: '',
     data: [],
     listEmail: [],
+    countries: [],
+    states: [],
     cities: [],
     jobs: [],
     genders: [],
@@ -39,10 +41,21 @@ const NewRegisterReducer = (state = initialState, action) => {
         case 'SET_CATALOG':
             return {
                 ...state,
-                cities: action.payload.data.cities,
+                countries: action.payload.data.countries,
+                // states: action.payload.data.states,
                 genders: action.payload.data.genders,
                 jobs: action.payload.data.jobs,
                 media_origins: action.payload.data.media_origins,
+            }
+        case 'SET_STATES':
+            return {
+                ...state,
+                states: action.payload.states,
+            }
+        case 'SET_CITIES':
+            return {
+                ...state,
+                cities: action.payload.cities,
             }
         case 'SET_DATA_STUDENT':
             let typedata = action.payload.typedata
@@ -59,7 +72,9 @@ const NewRegisterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetchingData: false,
-                listEmail: action.payload.listEmail
+                listEmail: action.payload.listEmail,
+                cities: action.payload.citiesList,
+                states: action.payload.statesList
             }
         case 'SET_SELECT_STUDENT':
             return {
@@ -96,8 +111,9 @@ const getCatalog = (dispatch) => {
         try {
             const user = JSON.parse(await AsyncStorage.getItem('user'));
             const token = user.token
-            const cities = await httpClient
-                .get(`cities`, {
+
+            const countries = await httpClient
+                .get(`countries`, {
                     'Authorization': `Bearer ${token}`,
                 }
                 );
@@ -120,7 +136,7 @@ const getCatalog = (dispatch) => {
                 genders,
                 jobs,
                 media_origins,
-                cities
+                countries,
             }
             if (data != '') {
                 dispatch({
@@ -137,11 +153,87 @@ const getCatalog = (dispatch) => {
                 });
             }
         } catch (error) {
+            console.log(error);
             dispatch({
                 type: 'SET_REQUEST_ERROR',
                 payload: {
                     error: true,
                     message: 'Por el momento el servicio no está disponible, inténtelo mas tarde.'
+                }
+            });
+        }
+    }
+
+}
+
+const getCities = (dispatch) => {
+    return async (id) => {
+        try {
+            const user = JSON.parse(await AsyncStorage.getItem('user'));
+            const token = user.token
+            const cities = await httpClient
+                .get(`cities/${id}`, {
+                    'Authorization': `Bearer ${token}`,
+                }
+                );
+            if (cities != '') {
+                dispatch({
+                    type: 'SET_CITIES',
+                    payload: { cities }
+                });
+            } else {
+                dispatch({
+                    type: 'SET_REQUEST_ERROR',
+                    payload: {
+                        error: true,
+                        message: 'Por el momento el servicio no está disponible, inténtelo mas tarde.'
+                    }
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: 'SET_REQUEST_ERROR',
+                payload: {
+                    error: true,
+                    message: 'Por el momento el servicio getCities no está disponible, inténtelo mas tarde.'
+                }
+            });
+        }
+    }
+}
+
+const getStates = (dispatch) => {
+    return async (id) => {
+        try {
+            const user = JSON.parse(await AsyncStorage.getItem('user'));
+            const token = user.token
+            const states = await httpClient
+                .get(`states/${id}`, {
+                    'Authorization': `Bearer ${token}`,
+                }
+                );
+            if (states != '') {
+                dispatch({
+                    type: 'SET_STATES',
+                    payload: { states }
+                });
+            } else {
+                dispatch({
+                    type: 'SET_REQUEST_ERROR',
+                    payload: {
+                        error: true,
+                        message: 'Por el momento el servicio no está disponible, inténtelo mas tarde.'
+                    }
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: 'SET_REQUEST_ERROR',
+                payload: {
+                    error: true,
+                    message: 'Por el momento el servicio getCities no está disponible, inténtelo mas tarde.'
                 }
             });
         }
@@ -168,16 +260,30 @@ const handleEmailChange = (dispatch) => {
                     name: item.user.name,
                     paternal_surname: item.user.paternal_surname,
                     maternal_surname: item.user.maternal_surname,
-                    city_id: item.city_id,
-                    birthdate: item.birthdate,
+                    city_id: item.city.id,
+                    state_id: item.city.state.id,
+                    country_id: item.city.state.country.id,
+                    birthdate: moment(item.birthdate).format('DD-MM-YYYY'),
                     gender_id: item.gender_id,
                     job_id: item.job_id,
                     media_origin_id: item.media_origin_id,
                 }))
+                const citiesList = await httpClient
+                    .get(`cities/${listEmail[0].state_id}`, {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                    );
+                const statesList = await httpClient
+                    .get(`states/${listEmail[0].country_id}`, {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                    );
+               
                 dispatch({
                     type: 'SET_FROM_STUDENT',
-                    payload: { listEmail }
+                    payload: { listEmail, citiesList,statesList }
                 });
+
             } else {
                 dispatch({
                     type: 'SET_REQUEST_ERROR',
@@ -318,6 +424,8 @@ export const { Context, Provider } = createDataContext(
         selectStudenEmail,
         handleInputChange,
         getCatalog,
+        getCities,
+        getStates,
         handleVisibility,
         store
 
